@@ -10,8 +10,8 @@ import {ApiService} from "../shared/services/api.service";
 })
 export class AuthComponent implements OnInit {
 
-  authType: String = '';
-  title: String = '';
+  authType: string = '';
+  title: string = '';
   isSubmitting: boolean = false;
   authForm: FormGroup;
 
@@ -46,6 +46,7 @@ export class AuthComponent implements OnInit {
     let credentials = this.authForm.value;
     // check out what you get!
     console.log(credentials);
+    this.api.post(this.authType, credentials)
   }
 
 }
