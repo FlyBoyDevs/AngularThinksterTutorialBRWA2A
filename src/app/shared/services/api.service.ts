@@ -9,21 +9,25 @@ import {catchError, map} from "rxjs/operators";
 })
 export class ApiService {
 
+  /*Inject the HttpClient service which was provided HttpClientModule in SharedModule*/
   constructor(private http: HttpClient) {
   }
 
+  /*Set Headers for http calls*/
   private static setHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
+      'Content-Type': 'application/json'
+      // 'Authorization': 'my-auth-token'
     });
   }
 
+  /*Format errors into readable json*/
   private static formatErrors(error: any) {
     return throwError(
-      error.json);
+      error.error);
   }
 
+  /*Post according to Register/login function*/
   post(path: string, body: Object): Observable<any> {
     return this.http.post<Object>(environment.api_url + path, JSON.stringify(body), {headers: ApiService.setHeaders()}).pipe(
       catchError(ApiService.handleError),
@@ -31,6 +35,8 @@ export class ApiService {
     );
 
   }
+
+  /*Handle error from http calls*/
   private static handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -44,6 +50,7 @@ export class ApiService {
     }
     // return an observable with a user-facing error message
     // return throwError('Something bad happened; please try again later.');
+    debugger
     return throwError(ApiService.formatErrors(error));
   };
 
