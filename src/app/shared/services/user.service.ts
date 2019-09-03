@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {ApiService} from "./api.service";
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
-import {User} from "../models/user.model";
+import {BehaviorSubject, Observable} from 'rxjs';
+import {ApiService} from './api.service';
+import {HttpClient} from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
+import {User} from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +29,12 @@ export class UserService {
   }
 
   attemptAuth(type, credentials): Observable<User> {
-    let route = (type === 'login') ? '/login' : '';
+    let route: string;
+    route = (type === 'login') ? '/login' : '';
     return this.apiService.post('/users' + route, {user: credentials}).pipe(
+      catchError(err => err ),
       map(
-        data => {
+        (data: any) => {
           this.setAuth(data.user);
           return data;
         }

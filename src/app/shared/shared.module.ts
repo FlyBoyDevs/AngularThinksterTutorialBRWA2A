@@ -10,12 +10,13 @@ import {UserService} from "./services/user.service";
 import {Errors} from "./models/errors.model";
 import {User} from "./models/user.model";
 import { ListErrorsComponent } from './components/list-errors/list-errors.component';
+import { ShowAuthedDirective } from './show-authed.directive';
 
 
 /*By Importing SharedModule in other modules we automatically include the exported components for reuse
 * and would not need to import again in the other modules*/
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, ListErrorsComponent],
+  declarations: [HeaderComponent, FooterComponent, ListErrorsComponent, ShowAuthedDirective],
   imports: [
     CommonModule,
     HttpClientModule,

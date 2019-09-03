@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ErrorCode} from "@angular/compiler-cli/src/ngtsc/diagnostics";
-import {Errors} from "../shared/models/errors.model";
-import {UserService} from "../shared/services/user.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Errors} from '../shared/models/errors.model';
+import {UserService} from '../shared/services/user.service';
 
 @Component({
   selector: 'app-auth',
@@ -12,10 +11,10 @@ import {UserService} from "../shared/services/user.service";
 })
 export class AuthComponent implements OnInit {
 
-  authType: string = '';
-  title: string = '';
+  authType = '';
+  title = '';
   errors: Errors = new Errors();
-  isSubmitting: boolean = false;
+  isSubmitting = false;
   authForm: FormGroup;
 
   constructor(
@@ -26,8 +25,8 @@ export class AuthComponent implements OnInit {
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
-      'email': ['', Validators.required],
-      'password': ['', Validators.required]
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -48,17 +47,18 @@ export class AuthComponent implements OnInit {
     this.isSubmitting = true;
     this.errors =  new Errors();
 
-    let credentials = this.authForm.value;
+    const credentials = this.authForm.value;
     // check out what you get!
     // console.log(credentials);
     this.userService.attemptAuth(this.authType, credentials)
       .subscribe(
-        data => this.router.navigateByUrl('/'),
-        err => {
-          this.errors = err;
+        data => {debugger; this.router.navigateByUrl('/'); },
+        error => {
+          debugger;
+          this.errors = error;
           this.isSubmitting = false;
         }
-      );
+      ) ;
 
   }
 
